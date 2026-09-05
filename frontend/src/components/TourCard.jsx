@@ -1,71 +1,73 @@
 import React from "react";
-import { House, Star } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Star, MapPin, Clock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const hoverEffect = {
-  scale: 1.05,
-  transition: { duration: 0.3 },
-};
-
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.6 } },
-};
-
 const TourCard = ({ tour }) => {
-  const { id, title, photo, price, featured, city, avgRating } = tour;
+  const tourId = tour._id || tour.id;
+  const { title, photo, price, city, rating, avgRating, agencyName, duration } = tour;
   const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    scrollTo(0, 0);
+    navigate(`/tours/${tourId}`);
+  };
 
   return (
     <motion.div
-      className="bg-white/20 shadow-lg rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
-      whileHover={hoverEffect}
-      initial="hidden"
-      animate="visible"
-      variants={fadeIn}
+      onClick={handleCardClick}
+      className="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden flex flex-col justify-between transition-all duration-300 group cursor-pointer"
+      whileHover={{ y: -6 }}
     >
-      <div className="relative">
-        <img src={photo} alt="tourimg" className="w-full h-64 object-cover" />
-        {featured && (
-          <span className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded-md text-sm font-semibold">
-            Featured
+      <div>
+        <div className="relative overflow-hidden h-52">
+          <img
+            src={photo}
+            alt={title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <span className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-lg font-bold flex items-center gap-1">
+            <MapPin className="w-3 h-3 text-blue-400" /> {city}
           </span>
-        )}
+        </div>
+
+        <div className="p-5">
+          <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+            <span className="bg-blue-50 text-blue-700 font-extrabold px-2.5 py-0.5 rounded text-[11px]">
+              {agencyName || "TripSathi"}
+            </span>
+            <span className="flex items-center text-amber-500 font-bold">
+              <Star className="w-3.5 h-3.5 fill-amber-400 mr-1 text-amber-400" />
+              {rating || avgRating || 4.8}
+            </span>
+          </div>
+
+          <h3 className="font-extrabold text-gray-900 text-base leading-snug mb-2 line-clamp-2 group-hover:text-blue-600 transition">
+            {title}
+          </h3>
+
+          <div className="text-xs text-gray-400 flex items-center gap-1 mt-1">
+            <Clock className="w-3.5 h-3.5 text-gray-400" /> {duration || "3 Days / 2 Nights"}
+          </div>
+        </div>
       </div>
 
-      <div className="p-4">
-        <div className="flex items-center text-gray-600 mb-2">
-          <House className="mr-2 text-gray-500" />
-          <h3 className="text-lg">{city}</h3>
-        </div>
-        <div className="flex items-center text-yellow-500 mb-2">
-          <Star className="mr-2" />
-          <h3 className="text-lg">{avgRating}</h3>
+      <div className="p-5 pt-0 flex justify-between items-center border-t border-gray-100 mt-2">
+        <div>
+          <span className="text-[10px] uppercase text-gray-400 font-bold block">Starting from</span>
+          <span className="text-xl font-black text-emerald-600">₹{price?.toLocaleString()}</span>
+          <span className="text-[11px] text-gray-500"> /person</span>
         </div>
 
-        <h3 className="text-xl font-semibold mb-4">
-          <Link
-            to={`/tours/${id}`}
-            onClick={() => scrollTo(0, 0)}
-            className="text-blue-600 hover:underline"
-          >
-            {title.slice(0, 20) + "."}
-          </Link>
-        </h3>
-
-        <div className="flex justify-between items-center">
-          <h5 className="text-xl font-semibold text-gray-800">
-            ₹{price} <span className="text-sm text-gray-500">/person</span>
-          </h5>
-          <motion.button
-            className="bg-gradient-to-b from-sky-500 to-blue-500 text-white hover:from-sky-800 hover:to-blue-700 py-2 px-4 rounded-md transition-colors"
-            onClick={() => navigate(`/tours/${id}`)}
-            whileTap={{ scale: 0.95 }}
-          >
-            {/* <Link to={`/tours/${id}`}>Book</Link> */}View
-          </motion.button>
-        </div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleCardClick();
+          }}
+          className="bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md hover:from-sky-600 hover:to-blue-700 hover:shadow-lg transition"
+        >
+          View Package
+        </button>
       </div>
     </motion.div>
   );

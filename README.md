@@ -1,133 +1,56 @@
-# TripGo - Travel Agency Booking System Platform
+# TripSathi - AI-Powered Travel Companion & Multi-Agency Booking Platform
 
-Welcome to the TripGo repository! This project is a Travel Agency Booking System designed to help customers easily explore and book exciting travel packages. It provides a user-friendly interface for customers to view available packages, book their trips, and receive basic invoices for their bookings.
+Welcome to **TripSathi**! TripSathi is a startup-grade travel platform designed to connect travelers, tour agencies, and platform administrators in a seamless ecosystem.
 
-## Project Overview
+---
 
-TripGo offers an easy-to-use platform where customers can:
+## 🚀 Core Features
 
-- Browse through available tour packages.
-- Book a tour package by providing necessary details.
-- Receive a basic invoice after booking, summarizing customer information and booking details.
+1. **👑 Super Admin Control Center**: Master dashboard for platform owners to approve partner agencies, monitor system-wide revenue, and oversee all tour listings & customer bookings.
+2. **🏢 Partner Agency Portal**: Dedicated agency management panel for agencies to publish packages, manage agency bookings, and track sales performance.
+3. **🤖 TripSathi AI Itinerary Planner**: Smart AI engine that generates day-by-day travel schedules based on destination, duration, budget, and travel style.
+4. **👫 "Find a Sathi" Co-Traveler Community**: Connect solo travelers to share trip costs, cab expenses, and join group tours.
+5. **🔍 Advanced Search & Discovery Engine**: Real-time filtering by price range slider, category chips, location, and sorting by rating or price.
+6. **🎟️ Promo Code & Dynamic Pricing Breakdown**: Apply discount coupons (`FIRSTTRIP10`, `SATHISPECIAL`) with transparent price breakdowns.
+7. **🧾 PDF Invoice Generation**: Instant styled PDF invoice generation and download after booking.
+8. **⭐ Traveler Reviews & Ratings**: Community feedback system with star ratings and verified traveler reviews.
 
-### Core Features:
+---
 
-1. **Tour Packages Page:**
-   - Displays a list of tour packages with essential details:
-     - Title
-     - Description
-     - Price
-     - Available Dates
-     - Available Slots
-     - Images
-   - Data is fetched from a MongoDB collection to dynamically display the available packages.
+## 🛠️ Tech Stack
 
-2. **Package Booking:**
-   - Each package has a 'Book Now' button.
-   - Clicking the 'Book Now' button opens a form where customers can input:
-     - Name
-     - Email
-     - Phone Number
-     - Number of travelers
-     - Special requests
-   - After the customer fills in their details, the booking is saved to MongoDB.
+- **Frontend**: React.js, Vite, TailwindCSS, Framer Motion, Lucide Icons, React PDF Renderer, React Toastify
+- **Backend**: Node.js, Express.js, JSON Web Tokens (JWT), BcryptJS
+- **Database**: MongoDB (Mongoose Schema Architecture)
 
-3. **Invoice Generation:**
-   - After booking, the system generates a basic invoice which includes:
-     - Customer Details (Name, Email, Phone Number)
-     - Package Details (Title, Price, Number of Travelers)
-     - Total Price (Calculated based on the price per person \* number of travelers)
+---
 
-## Tech Stack
-
-- **Frontend:**
-  - React
-  - TailwindCSS
-
-- **Backend:**
-  - Node.js
-  - Express.js
-
-- **Database:**
-  - MongoDB (for storing package and booking details)
-
-## Installation
+## ⚡ Quick Start Instructions
 
 ### Prerequisites
+- Node.js (v18+)
+- MongoDB (running locally or MongoDB Atlas)
 
-Ensure that you have the following installed:
+### 1. Backend Setup
+```bash
+cd backend
+npm install
+npm start
+```
+*Backend runs at `http://localhost:4000`*
 
-- Node.js
-- MongoDB
+### 2. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
+*Frontend runs at `http://localhost:5173`*
 
-### Frontend Setup
+---
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Aditya1or0/TripGo.git
-   ```
-2. Navigate to the frontend directory:
-   ```bash
-   cd TripGo/frontend
-   ```
-3. Install the necessary dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
+## 🔐 Accounts & Roles
 
-### Backend Setup
-
-1. Navigate to the backend directory:
-   ```bash
-   cd TripGo/backend
-   ```
-2. Install the necessary dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the server:
-   ```bash
-   npm start
-   ```
-
-Ensure your MongoDB server is running and properly connected to the backend.
-
-## Usage
-
-### 1. **Tour Packages Page:**
-
-- Navigate to the homepage where you can view all available tour packages.
-- Each package will have details like the title, description, price, available dates, and an image.
-
-### 2. **Booking a Package:**
-
-- Click on the 'Book Now' button next to the package you wish to book.
-- Fill in the required customer information and submit the form.
-- Your booking will be saved in MongoDB.
-
-### 3. **Invoice Generation:**
-
-- After the booking is confirmed, you will receive an invoice with your booking details, including the customer and package information.
-
-## Contributing
-
-We welcome contributions to enhance the functionality of TripGo! If you'd like to contribute:
-
-1. Fork the repository.
-2. Create a new branch
-3. Make your changes and commit them.
-4. Push your changes to your forked repository.
-5. Submit a pull request with a description of your changes.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-- **GitHub Repository:** [https://github.com/Aditya1or0/TripGo](https://github.com/Aditya1or0/TripGo)
-- **Email:** [adityapandit264@gmail.com](mailto:adityapandit264@gmail.com)
+- **Super Admin Login**: Log in with email `admin@tripsathi.com` to access the Super Admin Control Center (`/super-admin`).
+- **Agency Partner**: Select "Tour Agency Partner" during registration to access the Agency Dashboard (`/agency-dashboard`).
+- **Traveler**: Register as a standard user to explore packages, use AI planning, and find travel buddies.

@@ -24,7 +24,7 @@ const About = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Welcome to <span className="text-blue-400">TripGo</span>
+          Welcome to <span className="text-blue-400">TripSathi</span>
         </motion.h1>
         <motion.p
           className="text-white mt-4 text-lg relative z-10"
@@ -49,7 +49,7 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            About <span className="text-blue-500">TripGo</span>
+            About <span className="text-blue-500">TripSathi</span>
           </motion.h2>
           <motion.p
             className="text-lg"
@@ -57,7 +57,7 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            TripGo is a leading travel agency offering personalized booking
+            TripSathi is a leading AI-powered travel platform offering personalized booking
             experiences to help travelers plan their perfect vacation. With a
             wide range of tours, activities, and accommodations, we make your
             travel dreams come true.
@@ -224,17 +224,17 @@ const About = () => {
               {
                 icon: <Mail className="w-8 h-8 mb-4" />,
                 title: "Email",
-                content: "contact@tripgo.com",
+                content: "kishanaelliya@gmail.com",
               },
               {
                 icon: <Phone className="w-8 h-8 mb-4" />,
                 title: "Phone",
-                content: "+91-9130045670",
+                content: "+91-9104847916",
               },
               {
                 icon: <MapPin className="w-8 h-8 mb-4" />,
                 title: "Address",
-                content: "Ghaziabad, India",
+                content: "Banaskantha, Gujarat",
               },
             ].map((item, index) => (
               <motion.div
@@ -253,7 +253,7 @@ const About = () => {
           </div>
           <div className="mt-12 text-center">
             <a
-              href="mailto:contact@tripgo.com"
+              href="mailto:kishanaelliya@gmail.com"
               className="inline-block px-8 py-3 bg-white text-blue-500 rounded-full font-semibold hover:bg-blue-100 transition duration-300"
             >
               Contact Us

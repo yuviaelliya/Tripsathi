@@ -38,7 +38,7 @@ const Header = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
-            TripGo
+            TripSathi
             <motion.div
               className="absolute -bottom-2 left-0 right-0 h-1 bg-blue-500/30 rounded-full"
               initial={{ scaleX: 0 }}

@@ -16,12 +16,12 @@ const Footer = () => {
             <img src={logo} alt="Logo" />
           </div>
           <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-            TripGo
+            TripSathi
           </span>
         </div>
       </Link>
       <p className="flex-1 border-l border-gray-400 pl-4 text-sm text-gray-500 max-sm:hidden">
-        &copy; 2024 TripGo. All Rights Reserved. | Powered by Innovation.
+        &copy; 2026 TripSathi. All Rights Reserved. | Powered by Innovation.
       </p>
       <div className="flex gap-2.5">
         <img src={assets.facebook_icon} alt="fbimg" width={35} />

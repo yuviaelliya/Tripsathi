@@ -13,23 +13,29 @@ import Invoice from "./pages/Invoice";
 import About from "./pages/About";
 import ScrollToTop from "./components/ScrollToTop";
 import MyBooking from "./pages/MyBooking";
+import SuperAdminDashboard from "./pages/SuperAdminDashboard";
+import AgencyDashboard from "./pages/AgencyDashboard";
+import FindSathi from "./pages/FindSathi";
 
 const App = () => {
   return (
-    <div className="flex flex-col min-h-screen px-4 sm:px-8 md:px-10 lg:px-22">
-      <ToastContainer theme="dark" position="bottom-right" autoClose={1000} />
+    <div className="flex flex-col min-h-screen">
+      <ToastContainer theme="dark" position="bottom-right" autoClose={1500} />
       <Navbar />
       <ScrollToTop />
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tours" element={<Tour />} />
-          <Route path="/about" element={<About />} />
           <Route path="/tours/:id" element={<TourDetails />} />
+          <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/my-booking" element={<MyBooking />} />
+          <Route path="/super-admin" element={<SuperAdminDashboard />} />
+          <Route path="/agency-dashboard" element={<AgencyDashboard />} />
+          <Route path="/find-sathi" element={<FindSathi />} />
         </Routes>
       </main>
       <Footer />

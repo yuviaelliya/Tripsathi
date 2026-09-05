@@ -2,247 +2,197 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import useBooking from "../hooks/useCreateBooking";
+import { Tag, Check } from "lucide-react";
 
 const Booking = () => {
   const location = useLocation();
   const tour = location.state?.tour;
 
-  // Early block render if data missing
   if (!tour) return null;
 
   const { title = "" } = tour;
 
-  const { formData, totalPrice, isSubmitting, handleChange, handleSubmit } =
-    useBooking(tour);
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
-
-  const formFieldVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-  };
-
-  const staggerChildren = {
-    visible: {
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const priceCardVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
+  const {
+    formData,
+    rawSubtotal,
+    totalPrice,
+    discount,
+    couponCode,
+    setCouponCode,
+    couponApplied,
+    applyCoupon,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+  } = useBooking(tour);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
-      <motion.div
-        className="max-w-4xl mx-auto"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Header Section */}
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <motion.h1
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Book Your Adventure
-          </motion.h1>
-          <motion.p
-            className="text-gray-600 text-lg"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Complete your booking for{" "}
-            <span className="font-semibold text-blue-600">{title}</span>
-          </motion.p>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
+            Confirm Your Booking
+          </h1>
+          <p className="text-gray-600">
+            Package: <span className="font-bold text-blue-600">{title}</span>
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Form */}
-          <motion.div
-            className="lg:col-span-2"
-            variants={staggerChildren}
-            initial="hidden"
-            animate="visible"
-          >
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white text-sm font-bold">1</span>
+          <div className="lg:col-span-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8">
+            <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <span className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+              Traveler Information
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="block text-xs font-bold text-gray-700 uppercase mb-1">Full Name *</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name || ""}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  placeholder="e.g. Rahul Verma"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 uppercase mb-1">Email Address *</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email || ""}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  placeholder="rahul@example.com"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 uppercase mb-1">Phone Number *</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone || ""}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  placeholder="+91 9876543210"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 uppercase mb-1">Number of Travelers</label>
+                <input
+                  type="number"
+                  name="travelers"
+                  min="1"
+                  max="20"
+                  value={formData.travelers || 1}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 uppercase mb-1">Special Requests (Optional)</label>
+                <textarea
+                  name="specialRequests"
+                  value={formData.specialRequests || ""}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full px-4 py-2.5 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  placeholder="Dietary requests, room preferences..."
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-3.5 rounded-xl font-bold text-white transition ${
+                  isSubmitting
+                    ? "bg-gray-400"
+                    : "bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 shadow-lg"
+                }`}
+              >
+                {isSubmitting ? "Processing..." : "Complete Booking & Generate Invoice"}
+              </button>
+            </form>
+          </div>
+
+          {/* Pricing Summary Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-6 sticky top-24">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100 flex items-center justify-between">
+                <span>Price Breakdown</span>
+                <span className="text-xs text-blue-600 font-semibold">{tour.agencyName || "TripSathi"}</span>
+              </h3>
+
+              <div className="space-y-3 text-sm text-gray-600 mb-6">
+                <div className="flex justify-between">
+                  <span>Price per person</span>
+                  <span className="font-semibold text-gray-900">₹{tour.price}</span>
                 </div>
-                Traveler Information
-              </h2>
+                <div className="flex justify-between">
+                  <span>Travelers</span>
+                  <span className="font-semibold text-gray-900">{formData.travelers}</span>
+                </div>
+                <div className="flex justify-between pt-2 border-t border-gray-100">
+                  <span>Subtotal</span>
+                  <span className="font-semibold text-gray-900">₹{rawSubtotal}</span>
+                </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <motion.div variants={formFieldVariants} className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name || ""}
-                    onChange={handleChange}
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl bg-white/50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-gray-400"
-                    placeholder="Enter your full name"
-                    required
-                  />
-                </motion.div>
-
-                <motion.div variants={formFieldVariants} className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email || ""}
-                    onChange={handleChange}
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl bg-white/50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-gray-400"
-                    placeholder="your.email@example.com"
-                    required
-                  />
-                </motion.div>
-
-                <motion.div variants={formFieldVariants} className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Phone Number *
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone || ""}
-                    onChange={handleChange}
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl bg-white/50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-gray-400"
-                    placeholder="+91 98765 43210"
-                    required
-                  />
-                </motion.div>
-
-                <motion.div variants={formFieldVariants} className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Number of Travelers
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="number"
-                      name="travelers"
-                      min="1"
-                      max="20"
-                      value={formData.travelers || 1}
-                      onChange={handleChange}
-                      className="w-full p-4 border-2 border-gray-200 rounded-xl bg-white/50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
-                    />
-                    <div className="absolute right-4 top-4 text-gray-400 pointer-events-none">
-                      👥
-                    </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-emerald-600 font-semibold">
+                    <span>Discount Code ({couponCode})</span>
+                    <span>-₹{discount}</span>
                   </div>
-                </motion.div>
+                )}
 
-                <motion.div variants={formFieldVariants} className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Special Requests
-                    <span className="text-gray-500 font-normal ml-1">
-                      (Optional)
-                    </span>
-                  </label>
-                  <textarea
-                    name="specialRequests"
-                    value={formData.specialRequests || ""}
-                    onChange={handleChange}
-                    rows="4"
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl bg-white/50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-gray-400 resize-none"
-                    placeholder="Any dietary requirements, accessibility needs, or special occasions..."
-                  />
-                </motion.div>
-
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full py-4 px-6 rounded-xl font-semibold text-white text-lg transition-all duration-300 transform ${
-                    isSubmitting
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 hover:scale-105 shadow-lg hover:shadow-xl"
-                  }`}
-                >
-                  {isSubmitting ? "Booking..." : "Confirm Booking"}
-                </motion.button>
-              </form>
-            </div>
-          </motion.div>
-
-          {/* Price Summary Sidebar */}
-          <motion.div
-            className="lg:col-span-1"
-            variants={priceCardVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <div className="sticky top-8">
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-white text-sm font-bold">₹</span>
-                  </div>
-                  Booking Summary
-                </h3>
-
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="text-gray-600">Tour</span>
-                    <span className="font-semibold text-gray-800 text-right text-sm">
-                      {title}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="text-gray-600">Price per person</span>
-                    <span className="font-semibold text-gray-800">
-                      ₹{tour.price.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="text-gray-600">Travelers</span>
-                    <span className="font-semibold text-gray-800">
-                      {formData.travelers}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center py-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg px-4 border-2 border-blue-200">
-                    <span className="text-lg font-bold text-gray-800">
-                      Total Amount
-                    </span>
-                    <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                      ₹{totalPrice.toLocaleString()}
-                    </span>
-                  </div>
+                <div className="flex justify-between pt-3 border-t border-gray-200 text-base font-extrabold text-gray-900">
+                  <span>Total Amount</span>
+                  <span className="text-emerald-600 text-xl">₹{totalPrice}</span>
                 </div>
               </div>
+
+              {/* Promo Coupon Box */}
+              <div className="pt-4 border-t border-gray-100">
+                <label className="block text-xs font-bold text-gray-700 uppercase mb-2 flex items-center gap-1">
+                  <Tag className="w-3.5 h-3.5 text-blue-600" /> Apply Coupon Code
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                    placeholder="e.g. FIRSTTRIP10"
+                    disabled={couponApplied}
+                    className="w-full px-3 py-2 border rounded-xl text-xs uppercase outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={applyCoupon}
+                    disabled={couponApplied}
+                    className={`px-3 py-2 text-xs font-bold rounded-xl text-white transition ${
+                      couponApplied ? "bg-emerald-600" : "bg-blue-600 hover:bg-blue-700"
+                    }`}
+                  >
+                    {couponApplied ? <Check className="w-4 h-4" /> : "Apply"}
+                  </button>
+                </div>
+                <span className="text-[10px] text-gray-400 mt-1.5 block">
+                  Available coupons: <code className="text-blue-600 font-semibold">FIRSTTRIP10</code>, <code className="text-blue-600 font-semibold">SATHISPECIAL</code>
+                </span>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
