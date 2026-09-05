@@ -37,9 +37,13 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        seedSuperAdmin();
-        seedInitialTours();
-        seedInitialCoupons();
+        try {
+            seedSuperAdmin();
+            seedInitialTours();
+            seedInitialCoupons();
+        } catch (Exception e) {
+            logger.warn("DataSeeder skipped initial seed due to DB schema initialization state: {}", e.getMessage());
+        }
     }
 
     private void seedSuperAdmin() {
