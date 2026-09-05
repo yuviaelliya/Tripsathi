@@ -20,37 +20,60 @@ Welcome to **TripSathi**! TripSathi is a startup-grade travel platform designed 
 ## 🛠️ Tech Stack
 
 - **Frontend**: React.js, Vite, TailwindCSS, Framer Motion, Lucide Icons, React PDF Renderer, React Toastify
-- **Backend**: Node.js, Express.js, JSON Web Tokens (JWT), BcryptJS
-- **Database**: MongoDB (Mongoose Schema Architecture)
+- **Backend**: 100% Java (Spring Boot 3, Spring Security, JWT, JPA / Hibernate)
+- **Database**: MySQL 8 (Auto Schema DDL & Data Seeder)
+- **Containerization**: Docker & Docker Compose
 
 ---
 
-## ⚡ Quick Start Instructions
+## 🐳 Shortest Path to Run (One-Command Setup with Docker)
+
+Anyone (including a friend cloning the repo) can run the entire project with **zero dependencies required** (no need to install Java, Maven, Node.js, or MySQL manually). Only **Docker Desktop** is required!
+
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/yuviaelliya/Tripsathi.git
+cd Tripsathi
+```
+
+### Step 2: Start All Services with Docker
+```bash
+docker compose up --build
+```
+
+That's it!
+- **Frontend App**: [http://localhost:5173](http://localhost:5173)
+- **Java Spring Boot API**: [http://localhost:4000](http://localhost:4000)
+- **MySQL Database**: `localhost:3306` (Credentials: `root` / `password`)
+
+---
+
+## 💻 Manual Setup Instructions (Without Docker)
 
 ### Prerequisites
-- Node.js (v18+)
-- MongoDB (running locally or MongoDB Atlas)
+- Java JDK 17+
+- MySQL Server (running on port 3306 with user `root` / password `password`)
+- Node.js 18+
 
-### 1. Backend Setup
+### 1. Run Java Backend
 ```bash
 cd backend
-npm install
-npm start
+./run-backend.sh          # Linux / macOS (or ./run-backend.sh --h2 for instant H2 database)
+run-backend.bat           # Windows
 ```
-*Backend runs at `http://localhost:4000`*
 
-### 2. Frontend Setup
+### 2. Run React Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-*Frontend runs at `http://localhost:5173`*
 
 ---
 
-## 🔐 Accounts & Roles
+## 🔐 Accounts & Seeder Data
 
-- **Super Admin Login**: Log in with email `admin@tripsathi.com` to access the Super Admin Control Center (`/super-admin`).
-- **Agency Partner**: Select "Tour Agency Partner" during registration to access the Agency Dashboard (`/agency-dashboard`).
-- **Traveler**: Register as a standard user to explore packages, use AI planning, and find travel buddies.
+On startup, the system automatically initializes the database with:
+- **Default Super Admin**: Log in with email `kishanaelliya@gmail.com` / password `Yuvii@9708`
+- **Seeded Tours**: 6 default packages (Manali, Goa, Kerala, Jaipur, Leh Ladakh, Rishikesh)
+- **Seeded Coupons**: `FIRSTTRIP10`, `SATHISPECIAL`
