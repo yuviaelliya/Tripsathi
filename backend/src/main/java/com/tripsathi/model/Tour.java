@@ -29,7 +29,7 @@ public class Tour {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String photo;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String desc;
 
     @Column(nullable = false)
